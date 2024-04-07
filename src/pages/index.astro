@@ -1,9 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CardGrid from '../components/CardGrid.astro';
+import GalleriaGrid from '../components/GalleriaGrid.astro';
+
+import data from '../../data.json';
+import { convertToSlug } from '../scripts/main.js';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-	
-	</main>
+<Layout title="Galleria">
+  <GalleriaGrid>
+    {
+      data.map((el) => (
+        <CardGrid
+          title={el.name}
+          artist={el.artist.name}
+          src={el.images.gallery}
+          alt={el.description}
+          href={`/galleria/${convertToSlug(el.name)}`}
+        />
+      ))
+    }
+  </GalleriaGrid>
 </Layout>

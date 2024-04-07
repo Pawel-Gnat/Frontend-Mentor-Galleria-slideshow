@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  artist: string;
+}
+
+const { title, artist } = Astro.props;
+---
+
+<footer>
+  <span class="loader"></span>
+  <div class="slideshow-nav wrapper">
+    <div>
+      <h3>
+        {title}
+      </h3>
+      <p class="text--primary">
+        {artist}
+      </p>
+    </div>
+    <div>
+      <button class="btn slideshow-nav__button" aria-label="previous slide">
+        <img src="/icons/arrow-right.svg" alt="" aria-hidden="true" />
+      </button>
+      <button class="btn slideshow-nav__button" aria-label="next slide">
+        <img src="/icons/arrow-right.svg" alt="" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+</footer>

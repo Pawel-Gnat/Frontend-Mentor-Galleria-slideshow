@@ -1,0 +1,29 @@
+$fonts-directory: '/fonts/';
+
+@font-face {
+  font-display: swap;
+  font-family: 'LibreBaskerville';
+  src: url($fonts-directory + 'LibreBaskerville-Bold.eot');
+  src:
+    url($fonts-directory + 'LibreBaskerville-Bold.eot?#iefix') format('embedded-opentype'),
+    url($fonts-directory + 'LibreBaskerville-Bold.woff2') format('woff2'),
+    url($fonts-directory + 'LibreBaskerville-Bold.woff') format('woff'),
+    url($fonts-directory + 'LibreBaskerville-Bold.ttf') format('truetype'),
+    url($fonts-directory + 'LibreBaskerville-Bold.svg#LibreBaskerville-Bold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'LibreBaskerville';
+  src: url($fonts-directory + 'LibreBaskerville-Regular.eot');
+  src:
+    url($fonts-directory + 'LibreBaskerville-Regular.eot?#iefix') format('embedded-opentype'),
+    url($fonts-directory + 'LibreBaskerville-Regular.woff2') format('woff2'),
+    url($fonts-directory + 'LibreBaskerville-Regular.woff') format('woff'),
+    url($fonts-directory + 'LibreBaskerville-Regular.ttf') format('truetype'),
+    url($fonts-directory + 'LibreBaskerville-Regular.svg#LibreBaskerville-Regular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}

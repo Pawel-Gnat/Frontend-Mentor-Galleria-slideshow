@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SlideshowNav from '../../components/SlideshowNav.astro';
+
+import data from '../../../data.json';
+import { convertToSlug } from '../../scripts/main.js';
+
+export function getStaticPaths() {
+  return data.map(({ name, year, description, source, artist, images }) => {
+    return {
+      params: { picture: convertToSlug(name) },
+      props: { name, year, description, source, artist, images },
+    };
+  });
+}
+
+const { name, year, description, source, artist, images } = Astro.props;
+---
+
+<Layout title={name}>
+  <div class="picture-container wrapper">
+    <div class="picture-container__left">
+      <div>
+        <figure class="picture-container__figure">
+          <img class="picture-container__image" src={images.hero.large} alt={description} />
+          <div>
+            <figcaption>
+              <h1 class="picture-container__title">
+                {name}
+              </h1>
+            </figcaption>
+            <p class="picture-container__name text--primary">
+              {artist.name}
+            </p>
+          </div>
+        </figure>
+        <button class="picture-container__view btn btn__view">
+          <img src="/icons/view.svg" alt="" aria-hidden="true" />
+          view image
+        </button>
+      </div>
+      <img class="picture-container__artist-img" src={artist.image} alt={artist.name} />
+    </div>
+    <div class="picture-container__right" data-year={year}>
+      <p class="text--primary">{description}</p>
+      <a href={source} class="link link--source" target="_blank" rel="noopener noreferrer"
+        >go to source</a
+      >
+    </div>
+  </div>
+  <SlideshowNav title={name} artist={artist.name} />
+</Layout>

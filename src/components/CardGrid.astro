@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  artist: string;
+  href: string;
+  src: string;
+  alt: string;
+}
+
+const { href, title, artist, src, alt } = Astro.props;
+---
+
+<li class="galleria-grid__card">
+  <a href={href}>
+    <figure>
+      <img src={src} alt={alt} />
+      <div>
+        <figcaption>
+          <h3 class="galleria-grid__title">
+            {title}
+          </h3>
+        </figcaption>
+        <p class="galleria-grid__artist text--primary">
+          {artist}
+        </p>
+      </div>
+    </figure>
+  </a>
+</li>

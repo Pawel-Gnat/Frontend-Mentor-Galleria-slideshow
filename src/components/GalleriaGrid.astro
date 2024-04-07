@@ -1,0 +1,15 @@
+<ul class="galleria-grid wrapper">
+  <slot />
+</ul>
+
+<script>
+  import MiniMasonry from 'minimasonry';
+
+  const masonry = new MiniMasonry({
+    container: '.galleria-grid',
+    gutter: 40,
+    basewidth: 310,
+    ultimateGutter: 40,
+    surroundingGutter:false,
+  });
+</script>
