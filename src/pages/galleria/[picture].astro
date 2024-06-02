@@ -1,28 +1,29 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SlideshowNav from '../../components/SlideshowNav.astro';
+import ImageModal from '../../components/ImageModal.astro';
 
 import data from '../../../data.json';
 import { convertToSlug } from '../../scripts/main.js';
 
 export function getStaticPaths() {
-  return data.map(({ name, year, description, source, artist, images }) => {
+  return data.map(({ name, year, description, source, artist, images }, index) => {
     return {
       params: { picture: convertToSlug(name) },
-      props: { name, year, description, source, artist, images },
+      props: { index, name, year, description, source, artist, images },
     };
   });
 }
 
-const { name, year, description, source, artist, images } = Astro.props;
+const { index, name, year, description, source, artist, images } = Astro.props;
 ---
 
-<Layout title={name}>
+<Layout title={name} page="galleria">
   <div class="picture-container wrapper">
     <div class="picture-container__left">
       <div>
         <figure class="picture-container__figure">
-          <img class="picture-container__image" src={images.hero.large} alt={description} />
+          <img class="picture-container__image" src={images.hero.small} alt={description} />
           <div>
             <figcaption>
               <h1 class="picture-container__title">
@@ -48,5 +49,72 @@ const { name, year, description, source, artist, images } = Astro.props;
       >
     </div>
   </div>
-  <SlideshowNav title={name} artist={artist.name} />
+  <SlideshowNav title={name} artist={artist.name} index={index} />
 </Layout>
+<ImageModal imgUrl={images.hero.large} alt={description} />
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+  let slideshowState = sessionStorage.getItem('slideshow') || 'stop';
+  let timeoutId;
+
+  document.addEventListener('astro:page-load', () => {
+    const slideshowBtn = document.querySelector('button.link--slideshow');
+    const loaderLine = document.querySelector('.loader');
+    const nextPageLink = document.querySelector('.btn--next');
+    const modalBtnOpen = document.querySelector('.picture-container__view');
+    const modalBtnClose = document.querySelector('.modal .btn__view');
+    const modal = document.querySelector('#modal');
+    const header = document.querySelector('header');
+    const main = document.querySelector('main');
+
+    if (modalBtnOpen) {
+      modalBtnOpen.addEventListener('click', () => {
+        modal.showModal();
+        modalBtnClose.focus();
+        main.setAttribute('inert', '');
+        header.setAttribute('inert', '');
+      });
+
+      modalBtnClose.addEventListener('click', () => {
+        modal.close();
+        main.removeAttribute('inert');
+        header.removeAttribute('inert');
+      });
+    }
+
+    const startAnimation = () => {
+      if (slideshowState === 'play' && !nextPageLink.classList.contains('link--disabled')) {
+        slideshowBtn.textContent = 'Stop slideshow';
+        loaderLine.classList.add('loading-animation');
+
+        timeoutId = setTimeout(() => {
+          navigate(nextPageLink.href);
+        }, 10000);
+      } else {
+        loaderLine.classList.remove('loading-animation');
+        slideshowBtn.textContent = 'Start slideshow';
+        clearTimeout(timeoutId);
+      }
+    };
+
+    const toggleSlideshowState = () => {
+      if (slideshowState === 'play') {
+        sessionStorage.setItem('slideshow', 'stop');
+      } else {
+        sessionStorage.setItem('slideshow', 'play');
+      }
+
+      slideshowState = sessionStorage.getItem('slideshow');
+    };
+
+    if (slideshowBtn) {
+      slideshowBtn.addEventListener('click', () => {
+        toggleSlideshowState();
+        startAnimation();
+      });
+
+      startAnimation();
+    }
+  });
+</script>

@@ -1,4 +1,19 @@
+---
+import data from '../../data.json';
+import { convertToSlug } from '../scripts/main';
+const path = convertToSlug(data[0].name);
+const { page } = Astro.props;
+---
+
 <header class="wrapper">
-  <a href="/"><img src="/icons/logo.svg" alt="Galleria" /></a>
-  <a href="/" class="link link--slideshow">Start slideshow</a>
+  <a href="/"><img src="/icons/logo.svg" class="logo" alt="Galleria" /></a>
+  {
+    page === 'index' ? (
+      <a href={`/galleria/${path}`} class="link link--slideshow">
+        Start slideshow
+      </a>
+    ) : (
+      <button class="link link--slideshow">Start slideshow</button>
+    )
+  }
 </header>

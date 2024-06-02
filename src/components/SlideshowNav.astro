@@ -1,13 +1,19 @@
 ---
+import { convertToSlug, getNextPageName, getPreviousPageName } from '../scripts/main';
+
 interface Props {
   title: string;
   artist: string;
+  index: number;
 }
 
-const { title, artist } = Astro.props;
+const { title, artist, index } = Astro.props;
+
+const previousPageName = getPreviousPageName(index);
+const nextPageName = getNextPageName(index);
 ---
 
-<footer>
+<div class="slideshow">
   <span class="loader"></span>
   <div class="slideshow-nav wrapper">
     <div>
@@ -19,12 +25,20 @@ const { title, artist } = Astro.props;
       </p>
     </div>
     <div>
-      <button class="btn slideshow-nav__button" aria-label="previous slide">
+      <a
+        href={previousPageName && `/galleria/${convertToSlug(previousPageName)}`}
+        class=`btn btn--prev slideshow-nav__button ${previousPageName ? '' : 'link--disabled'}`
+        aria-label="previous slide"
+      >
         <img src="/icons/arrow-right.svg" alt="" aria-hidden="true" />
-      </button>
-      <button class="btn slideshow-nav__button" aria-label="next slide">
+      </a>
+      <a
+        href={nextPageName && `/galleria/${convertToSlug(nextPageName)}`}
+        class=`btn btn--next slideshow-nav__button ${nextPageName ? '' : 'link--disabled'}`
+        aria-label="next slide"
+      >
         <img src="/icons/arrow-right.svg" alt="" aria-hidden="true" />
-      </button>
+      </a>
     </div>
   </div>
-</footer>
+</div>

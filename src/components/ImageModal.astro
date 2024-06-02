@@ -1,0 +1,11 @@
+---
+const { imgUrl, alt } = Astro.props;
+---
+
+<dialog class="modal" id="modal">
+  <img src=`${imgUrl}` alt=`${alt}` />
+  <button class="btn btn__view">
+    <img src="/icons/view.svg" alt="" aria-hidden="true" />
+    close image
+  </button>
+</dialog>
