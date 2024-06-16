@@ -28,7 +28,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Solution]()
+- Solution URL: [Solution](https://www.frontendmentor.io/solutions/galleria-slideshow-site-2aoMUtdm37)
 - Live Site URL: [Live](https://frontend-mentor-galleria-slideshow.vercel.app/)
 
 ## My process
@@ -38,6 +38,7 @@ Users should be able to:
 - Astro
 - SCSS
 - TransitionAPI
+- Minimasonry (it doesn't work well with server side generated components)
 
 ### What I learned
 
